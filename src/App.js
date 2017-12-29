@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
 
-
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 import RecursiveIterator from 'recursive-iterator';
 import objectPath from 'object-path';
 
+const submitFile = gql`
+  mutation($input: FileInput!) {
+    uploadFile(input: $input)
+  }
+`;
+
+// const submitFile = gql`
+//   mutation($input: FileInput!) {
+//     uploadFile(input: $input){
+//       entity{
+//         ...on FileFile {
+//           url
+//         }
+//       }
+//     }
+//   }
+// `;
 
 class App extends Component {
-
-  // state = {
-  //     csrfToken: '',
-  //     oauthToken: {}
-  // };
 
   constructor(props){
     super(props);
@@ -22,28 +33,10 @@ class App extends Component {
   }
 
   handleChange(target){
-
-    const formData  = new FormData();
-    
-    // search for File objects on the request and set it as formData
-    for(let { node, path } of new RecursiveIterator(target.variables)) {
-        if (node instanceof File) {
-            const id = Math.random().toString(36);
-            formData.append(id, node);
-            objectPath.set(target.variables, path.join('.'), id);
-        }
-    }
-    // Display the key/value pairs
-    // for (var pair of formData.entries()) {
-    //   console.log(pair);
-    // }
-
-    // 
-    // this.props.mutate({ variables: { file: target} })
     this.props.mutate({ 
         variables: { 
           input : {
-            file: target.files[0].name
+            file: target.files[0]
           } 
         }
       }
@@ -66,24 +59,5 @@ class App extends Component {
   }
 
 }
-
-
-const submitFile = gql`
-  mutation($input: FileInput!) {
-    uploadFile(input: $input)
-  }
-`;
-
-// const submitFile = gql`
-//   mutation($input: FileInput!) {
-//     uploadFile(input: $input){
-//       entity{
-//         ...on FileFile {
-//           url
-//         }
-//       }
-//     }
-//   }
-// `;
 
 export default graphql(submitFile)(App);
