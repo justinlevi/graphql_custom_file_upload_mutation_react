@@ -6,7 +6,6 @@ import registerServiceWorker from './registerServiceWorker';
 
 import axios from 'axios';
 import Querystring from 'query-string';
-import { HttpLink } from 'apollo-link-http';
 import { ApolloLink, concat } from 'apollo-link';
 import { createUploadLink } from "apollo-upload-client/lib/main";
 import { ApolloClient } from 'apollo-client';

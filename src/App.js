@@ -3,11 +3,8 @@ import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
-import RecursiveIterator from 'recursive-iterator';
-import objectPath from 'object-path';
-
 const submitFile = gql`
-  mutation($input: FileInput!) {
+  mutation uploadFile($input: FileInput!) {
     uploadFile(input: $input)
   }
 `;
