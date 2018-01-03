@@ -30,10 +30,12 @@ class App extends Component {
   }
 
   handleChange(target){
-    this.props.mutate({ 
-        variables: { 
+    this.props.mutate({
+        
+        variables: {
+          file: target.files[0], 
           input : {
-            file: target.files[0]
+            filename: target.files[0].name
           } 
         }
       }
