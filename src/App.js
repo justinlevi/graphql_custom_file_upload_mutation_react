@@ -5,21 +5,13 @@ import { graphql } from 'react-apollo';
 
 const submitFile = gql`
   mutation fileUpload($input: FileUploadInput!) {
-    fileUpload(input: $input)
+    fileUpload(input: $input){
+      ...on File {
+        uri
+      }
+    }
   }
 `;
-
-// const submitFile = gql`
-//   mutation($input: FileInput!) {
-//     uploadFile(input: $input){
-//       entity{
-//         ...on FileFile {
-//           url
-//         }
-//       }
-//     }
-//   }
-// `;
 
 class App extends Component {
 
