@@ -25,7 +25,7 @@ class App extends Component {
     this.props.mutate({
         
         variables: {
-          file: target.files[0], 
+          file: target.files, 
           input : {
             name: target.files[0].name
           } 
@@ -41,6 +41,7 @@ class App extends Component {
         <input
           type="file"
           required
+          multiple
           onChange={({ target }) => {
             target.validity.valid && this.handleChange(target)
             }
