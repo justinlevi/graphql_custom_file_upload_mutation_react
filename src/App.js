@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 const submitFile = gql`
-  mutation uploadFile($input: FileInput!) {
-    uploadFile(input: $input)
+  mutation fileUpload($input: FileUploadInput!) {
+    fileUpload(input: $input)
   }
 `;
 
@@ -35,7 +35,7 @@ class App extends Component {
         variables: {
           file: target.files[0], 
           input : {
-            filename: target.files[0].name
+            name: target.files[0].name
           } 
         }
       }

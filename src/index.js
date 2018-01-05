@@ -56,7 +56,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext( context => ({
       headers: {
         authorization: oAuthToken || null,
-        'X-CSRF-Token': csrfToken || null 
+        'X-CSRF-Token': csrfToken || null, 
       }
     }));
   return forward(operation);
