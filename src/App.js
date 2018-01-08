@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+
+import UploadComponent from './components/UploadComponent';
 
 const submitFile = gql`
   mutation fileUpload($input: FileUploadInput!) {
@@ -38,7 +39,9 @@ class App extends Component {
 
   render = () => {
     return ( 
-        <input
+      <div>
+        <UploadComponent />
+        {/*<input
           type="file"
           required
           multiple
@@ -46,7 +49,9 @@ class App extends Component {
             target.validity.valid && this.handleChange(target)
             }
           }
-        />
+        />*/}
+        <button >UPLOAD THUMBNAILS</button>
+      </div>
     )
   }
 
