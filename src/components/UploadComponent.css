@@ -1,0 +1,58 @@
+.uploadComponentContainer > div {
+  margin-bottom: 10px; 
+}
+
+.browseContainer {
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.dropZone {
+  border: 2px dashed #bbb;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding: 25px;
+  text-align: center;
+  font: 20pt bold 'Vollkorn';
+  color: #bbb;
+}
+
+.dropZone:hover {
+  color: #333;
+  border: 2px dashed #333;
+  cursor: pointer;
+}
+
+/* IMAGE GRID */
+.container {
+  margin: auto;
+  max-width: 1200px;
+}
+
+.responsive-image {
+  max-width: 100%;
+}
+
+.cell img {
+  display: block;
+}
+
+
+@media screen and (min-width: 600px) {
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  .cell {
+    width: 20%;
+    margin: 1em;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .cell {
+    width: calc(100% / 10);
+  }
+}

@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "fine-uploader": "^5.15.4",
-    "fine-uploader-wrappers": "^1.0.1",
-    "react-fine-uploader": "^1.0.7",
-    "react-transition-group": "1.x.x",
     "apollo-client": "^2.0.3",
     "apollo-client-preset": "^1.0.5",
     "apollo-upload-client": "^7.0.0-alpha.1",
