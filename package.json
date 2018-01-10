@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "apollo-cache-inmemory": "^1.1.5",
     "apollo-client": "^2.0.3",
     "apollo-client-preset": "^1.0.5",
     "apollo-upload-client": "^7.0.0-alpha.1",

@@ -9,8 +9,10 @@ import Querystring from 'query-string';
 import { ApolloLink, concat } from 'apollo-link';
 import { createUploadLink } from "apollo-upload-client/lib/main";
 import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
+
+import introspectionQueryResultData from './fragmentTypes.json';
 
 const URL = 'http://contenta.loc';
 const CONSUMER_CREDENTIALS = {
@@ -68,10 +70,12 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 
 const uploadLink = createUploadLink({uri: URL.concat('/graphql?XDEBUG_SESSION_START=PHPSTORM'),});
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({ introspectionQueryResultData});
+
 const client = new ApolloClient({
   // link: createUploadLink({ uri: process.env.API_URI })
   link: concat(authMiddleware, uploadLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({fragmentMatcher}),
 });
 
 ReactDOM.render(
