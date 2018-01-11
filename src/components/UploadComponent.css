@@ -117,3 +117,47 @@ img {
   background-color: #204d74;
   border-color: #122b40;
 }
+
+.delete-image:hover{
+  cursor: pointer;
+}
+
+figure {
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+figure img {
+  border: none;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  display: block;
+  background: #ccc;
+  transition: transform .2s ease-in-out;
+  object-fit: cover;
+  max-height: 175px;
+}
+
+#myProgress {
+  width: 100%;
+  border-color: #122b40;
+  border-width: 1px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#myBar {
+  width: 0%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}

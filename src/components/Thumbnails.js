@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 export default class Thumbnails extends Component {
   static propTypes = {
-    render: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
+    render: PropTypes.func.isRequired
   }
 
   state = {
@@ -12,7 +13,8 @@ export default class Thumbnails extends Component {
 
   render() {
     return (
-      <div className={"cell"}>
+      <div className={"cell"} data-index={this.props.index}>
+        <div className="delete-image" onClick={() => this.props.handleClose(this.props.index)}>X</div>
         {this.props.render()}
       </div>
     )

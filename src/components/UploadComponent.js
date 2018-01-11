@@ -18,17 +18,20 @@ mutation fileUpload($input: FileUploadInput!) {
 }
 `;
 
-class UploadComponent extends Component {
+const initialState = {
+    images: [],
+    imageNames: [],
+    maxWidth: 400,
+    maxHeight: 225,
+    uploading: false
+};
 
-  state = {
-      images: [],
-      imageNames: [],
-      maxWidth: 400,
-      maxHeight: 225
-  };
+class UploadComponent extends Component {
 
   constructor(props) {
       super(props);
+
+      this.state = initialState;
 
       this.handleFileSelect = this.handleFileSelect.bind(this);  
       this.handleDragOver = this.handleDragOver.bind(this); 
@@ -37,6 +40,8 @@ class UploadComponent extends Component {
 
   handleUpload() {
 
+    this.setState({ uploading: true });
+        
     let files = [];
     this.state.images.map((image, i) => { 
       let block = image.split(";");
@@ -57,6 +62,7 @@ class UploadComponent extends Component {
       }
     })
     .then(response => {
+      this.setState(initialState);
       console.log(response)
     })
   }
@@ -103,6 +109,30 @@ class UploadComponent extends Component {
     event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
   }
 
+  handleClose(index){
+    let newImageArray = this.state.images;
+    let newImageNameArray = this.state.imageNames;
+
+    newImageArray.splice(index,1);
+    newImageNameArray.splice(index,1);
+    this.setState({
+      images: newImageArray,
+      imageNames: newImageNameArray
+    })
+  }
+
+  divStyle(){
+    return {
+      width: Math.round(this.props.progress) + '%'
+    }
+  }
+
+  progressStyle() {
+    return {
+      display: this.state.uploading ? "block" : "none"
+    }
+  }
+
   render() {
     return (
       <div className="uploadComponentContainer">
@@ -115,12 +145,23 @@ class UploadComponent extends Component {
             onChange={(event) => {this.handleFileSelect(event) }}
           />
         </div>
+
+
         { this.state.images.length > 0 ? <button className={"btn btn-primary"} onClick={this.handleUpload}>UPLOAD IMAGES</button>: null }
+        
+
+        <div id="myProgress" style={ this.progressStyle() }>
+          <div id="myBar" style={this.divStyle()}></div>
+        </div>
+        <div style={ this.progressStyle() }>{Math.round(this.props.progress) + "%"}</div>
+
+
+
         <output id="list" className="container">
           <div className={"grid"}>
             {
               this.state.images.map((image, i) => { 
-                return <Thumbnails key={i} render={ () => (
+                return <Thumbnails key={i} handleClose = {this.handleClose} index={i} render={ () => (
                   <figure>
                     <img alt={""} src={image} className={"responsive-image"}/>
                   </figure>
