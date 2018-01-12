@@ -11,8 +11,12 @@ import './UploadComponent.css';
 const submitFile = gql `
 mutation fileUpload($input: FileUploadInput!) {
   fileUpload(input: $input){
-    ...on File {
-      uri
+    ...on MediaImage {
+      fieldImage {
+        derivative(style:medium) {
+          url
+        }
+      }
     }
   }
 }
