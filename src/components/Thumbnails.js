@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 export default class Thumbnails extends Component {
   static propTypes = {
     index: PropTypes.number.isRequired,
+    handleDelete: PropTypes.func.isRequired,
     render: PropTypes.func.isRequired
   }
 
@@ -14,8 +15,8 @@ export default class Thumbnails extends Component {
   render() {
     return (
       <div className={"cell"} data-index={this.props.index}>
-        <div className="delete-image" onClick={() => this.props.handleClose(this.props.index)}>X</div>
         {this.props.render()}
+        <a className="delete" onClick={() => this.props.handleDelete(this.props.index)}></a>
       </div>
     )
   }

@@ -35,6 +35,7 @@
   display: inline-block;
   margin-bottom: 8px;
   width: calc(50% - 4px);
+  position: relative;
   margin-right: 8px;
   text-decoration: none;
   color: black;
@@ -118,8 +119,31 @@ img {
   border-color: #122b40;
 }
 
-.delete-image:hover{
+.delete {
+  color: #777;
+  font: 2em arial, sans-serif;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 5px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #aaa;
+  background-color: rgba(255,255,255,0.75);
   cursor: pointer;
+  transition: transform .2s ease-in-out;
+}
+
+.delete:after {
+  content: '✖'; /* UTF-8 symbol */
+  cursor: pointer;
+}
+.delete:hover{
+  cursor: pointer;
+  color: rgb(168, 30, 30);
+  background-color: rgba(255,255,255,0.95);
+  transition: transform .2s ease-in-out;
+  transform-origin: top right;
+  transform: scale(1.15);
 }
 
 figure {

@@ -40,6 +40,7 @@ class UploadComponent extends Component {
       this.handleFileSelect = this.handleFileSelect.bind(this);  
       this.handleDragOver = this.handleDragOver.bind(this); 
       this.handleUpload = this.handleUpload.bind(this); 
+      this.handleDelete = this.handleDelete.bind(this); 
   }
 
   handleUpload() {
@@ -113,7 +114,7 @@ class UploadComponent extends Component {
     event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
   }
 
-  handleClose(index){
+  handleDelete(index){
     let newImageArray = this.state.images;
     let newImageNameArray = this.state.imageNames;
 
@@ -165,7 +166,7 @@ class UploadComponent extends Component {
           <div className={"grid"}>
             {
               this.state.images.map((image, i) => { 
-                return <Thumbnails key={i} handleClose = {this.handleClose} index={i} render={ () => (
+                return <Thumbnails key={i} handleDelete = {this.handleDelete} index={i} render={ () => (
                   <figure>
                     <img alt={""} src={image} className={"responsive-image"}/>
                   </figure>
