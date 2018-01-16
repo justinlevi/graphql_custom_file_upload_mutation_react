@@ -133,17 +133,12 @@ img {
   transition: transform .2s ease-in-out;
 }
 
-.delete:after {
-  content: '✖'; /* UTF-8 symbol */
-  cursor: pointer;
-}
 .delete:hover{
   cursor: pointer;
   color: rgb(168, 30, 30);
   background-color: rgba(255,255,255,0.95);
   transition: transform .2s ease-in-out;
   transform-origin: top right;
-  transform: scale(1.15);
 }
 
 figure {

@@ -15,8 +15,8 @@ import UploadComponent from './components/UploadComponent';
 const URL = 'http://contenta.loc';
 const CONSUMER_CREDENTIALS = {
   grant_type: 'password',
-  client_id: '90f0c0b1-ec7f-47de-a649-454a96e238ab',
-  client_secret: 'test1123',
+  client_id: '8588a78d-46db-44b0-a175-af74f9511691',
+  client_secret: 'test',
   username: 'test',
   password: 'test'
 };
@@ -45,7 +45,7 @@ if(!sessionStorage.getItem('csrfToken') ){
   initializeCsrfToken();
 }
 
-if(!sessionStorage.getItem('authorization')){
+if(!sessionStorage.getItem('authorization') || sessionStorage.getItem('authorization') === 'undefined'){
   initializeOauthToken();
 }
 

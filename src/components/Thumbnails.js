@@ -16,7 +16,7 @@ export default class Thumbnails extends Component {
     return (
       <div className={"cell"} data-index={this.props.index}>
         {this.props.render()}
-        <a className="delete" onClick={() => this.props.handleDelete(this.props.index)}></a>
+        <a className="delete" onClick={() => this.props.handleDelete(this.props.index)}>✖</a>
       </div>
     )
   }
