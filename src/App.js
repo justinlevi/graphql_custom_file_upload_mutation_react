@@ -55,8 +55,7 @@ export class App extends Component {
       super(props);
 
       this.state = {
-        client: "",
-        progress: 0
+        client: ""
       };
   }
 
@@ -74,35 +73,9 @@ export class App extends Component {
       return forward(operation);
     })
 
-    const xhrFetcher = (url, opts={}, onProgress = progressHandler) => {
-      return new Promise( (res, rej)=>{
-          var xhr = new XMLHttpRequest();
-          xhr.open(opts.method || 'get', url);
-          for (var k in opts.headers||{})
-              xhr.setRequestHeader(k, opts.headers[k]);
-          xhr.onload = e => res(e.target); // e.target only exists on the completion event - this bypasses the ProgressEvent from triggering the promise
-          xhr.onerror = rej;
-          if (xhr.upload && onProgress)
-              xhr.upload.onprogress = onProgress; // event.loaded / event.total * 100 ; //event.lengthComputable
-          xhr.send(opts.body);
-      });
-    }
-
-    const progressHandler = (e) => {
-      if (e.lengthComputable) {
-        var percentComplete = (e.loaded / e.total) * 100;
-
-        this.setState({progress: percentComplete});
-
-        console.log("Upload ", Math.round(percentComplete) + "% complete.");
-      }
-    }
-  
-
     const uploadLink = createUploadLink(
       {
         uri: URL.concat('/graphql?XDEBUG_SESSION_START=PHPSTORM'),
-        fetch: xhrFetcher
       }
     );
 
@@ -121,7 +94,7 @@ export class App extends Component {
 
     return (
       <ApolloProvider client={this.state.client}>
-        <UploadComponent progress={this.state.progress} />
+        <UploadComponent />
       </ApolloProvider>
     )
   }

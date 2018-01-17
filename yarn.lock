@@ -2,16 +2,9 @@
 # yarn lockfile v1
 
 
-"@babel/polyfill@^7.0.0-beta.32":
-  version "7.0.0-beta.36"
-  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.0.0-beta.36.tgz#c37320d0e38f2cb6da3a78889b380cb529c7a957"
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.11.1"
-
-"@babel/runtime@^7.0.0-beta.32":
-  version "7.0.0-beta.36"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.36.tgz#df21386a6e5ad7ae794859944ff3e89e1c155096"
+"@babel/runtime@^7.0.0-beta.37":
+  version "7.0.0-beta.37"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.37.tgz#a717c99db91d64e988788bcf9df68a7779bbc98d"
   dependencies:
     core-js "^2.4.0"
     regenerator-runtime "^0.11.1"
@@ -224,14 +217,6 @@ apollo-link@^1.0.0, apollo-link@^1.0.6, apollo-link@^1.0.7:
     apollo-utilities "^1.0.0"
     zen-observable "^0.6.0"
 
-"apollo-upload-client@https://github.com/justinlevi/apollo-upload-client.git#056fb45":
-  version "7.0.0-alpha.1"
-  resolved "https://github.com/justinlevi/apollo-upload-client.git#056fb45943c6bac8a6ee6262b9fe31019b7990a6"
-  dependencies:
-    "@babel/polyfill" "^7.0.0-beta.32"
-    "@babel/runtime" "^7.0.0-beta.32"
-    extract-files "^2.0.1"
-
 apollo-utilities@^1.0.0, apollo-utilities@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.3.tgz#bf435277609850dd442cf1d5c2e8bc6655eaa943"
@@ -383,6 +368,10 @@ async@^2.1.2, async@^2.1.4, async@^2.4.1:
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
+
+attr-accept@^1.0.3:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-1.1.0.tgz#b5cd35227f163935a8f1de10ed3eba16941f6be6"
 
 autoprefixer@7.1.6:
   version "7.1.6"
@@ -1021,7 +1010,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.25.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -2534,11 +2523,11 @@ extglob@^0.3.1:
   dependencies:
     is-extglob "^1.0.0"
 
-extract-files@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-2.0.1.tgz#27df9e5a209f6d106bc1451ae378fd0b1f3409d0"
+extract-files@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-3.0.0.tgz#34ddb946fd5c3232c6874bc0760ab6af955947c1"
   dependencies:
-    babel-runtime "^6.25.0"
+    "@babel/runtime" "^7.0.0-beta.37"
 
 extract-text-webpack-plugin@3.0.2:
   version "3.0.2"
@@ -5149,7 +5138,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -5323,6 +5312,13 @@ react-dom@^16.2.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+react-dropzone@^4.2.5:
+  version "4.2.5"
+  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-4.2.5.tgz#61f4ea914ac8b0a8c7f39795c74c4718d03b13f1"
+  dependencies:
+    attr-accept "^1.0.3"
+    prop-types "^15.5.7"
 
 react-error-overlay@^3.0.0:
   version "3.0.0"
