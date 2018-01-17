@@ -1,46 +1,77 @@
 import React, {Component} from 'react';
-//import axios from 'axios';
+import PropTypes from 'prop-types'
+import axios from 'axios';
 import Dropzone from 'react-dropzone';
 
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 
 import './UploadComponent.css';
 
 const initialState = {
-    images: [],
-    imageNames: [],
-    maxWidth: 400,
-    maxHeight: 225,
-    uploading: false
+  input: {
+    filenames: []
+  },
+  images: [],
+  imageNames: [],
+  maxWidth: 400,
+  maxHeight: 225,
+  uploading: false
 };
 
 class UploadComponent extends Component {
+
+  static propTypes = {
+    input: PropTypes.object
+  }
 
   constructor(props) {
       super(props);
 
       this.state = initialState;
+      this.onDrop = this.onDrop.bind(this);
   }
 
   onDrop = (files) => {
 
-    this.props.query({ 
-        variables: { 
-          input : {
-            filenames: files
-          } 
-        }
+    let fileNames = [];
+    const len = files.length;
+    for (var i = 0; i < len; i++) {
+      let file = files[i];
+      // Only process image files.
+      if (!file.type.match('image.*')) {
+        continue;
+      }
+
+      fileNames.push(file.name);
+    }
+
+    const variables = {
+      "input": {"fileNames": fileNames}
+    };
+
+    this.props.client.query(
+      { 
+        query: getSignedUrls,
+        variables: variables
       }
     ).then(response => {
-      console.log(response)
 
-      // // now do a PUT request to the pre-signed URL
-      // axios.put(response.data, files[0]).then((response) => {
-      //   this.setState({
-      //     statusCode: response.status,
-      //   });
-      // });
+      const len = response.data.signedUploadURL.length;
+      for (var i = 0; i < len; i++) {
+        let url = response.data.signedUploadURL[i];
+        // // now do a PUT request to the pre-signed URL
+        axios.put(url, files[i]).then((response) => {
+          this.setState({
+            statusCode: response.status,
+          });
+        }).catch((error) => {
+          console.log('error ' + error);
+        });
+      }
+
+    }).catch((error) => {
+      console.log('error ' + error);
     });
   };
 
@@ -56,9 +87,9 @@ class UploadComponent extends Component {
 }
 
 const getSignedUrls = gql `
-query signedUploadUrl($input: SignedUploadInput!) {
+query signedUploadURL ($input: SignedUploadInput!) {
   signedUploadURL(input:$input)
 }
 `;
 
-export default graphql(getSignedUrls, { input: '' })(observer(UploadComponent));
+export default withApollo(UploadComponent);

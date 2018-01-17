@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Querystring from 'query-string';
 import { ApolloLink, concat } from 'apollo-link';
-import { createUploadLink } from "./apollo-upload-client-custom";
+import { HttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
@@ -73,7 +73,7 @@ export class App extends Component {
       return forward(operation);
     })
 
-    const uploadLink = createUploadLink(
+    const link = new HttpLink(
       {
         uri: URL.concat('/graphql?XDEBUG_SESSION_START=PHPSTORM'),
       }
@@ -83,7 +83,7 @@ export class App extends Component {
 
     const client = new ApolloClient({
       // link: createUploadLink({ uri: process.env.API_URI })
-      link: concat(authMiddleware, uploadLink),
+      link: concat(authMiddleware, link),
       cache: new InMemoryCache({fragmentMatcher}),
     });
 
