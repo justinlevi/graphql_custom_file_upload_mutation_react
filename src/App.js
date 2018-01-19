@@ -18,7 +18,7 @@ const CONSUMER_CREDENTIALS = {
   client_id: '8588a78d-46db-44b0-a175-af74f9511691',
   client_secret: 'test',
   username: 'test',
-  password: 'test'
+  password: 'test',
 };
 
 function initializeCsrfToken(){

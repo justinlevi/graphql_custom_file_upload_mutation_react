@@ -7,6 +7,7 @@
     "apollo-client": "^2.0.3",
     "apollo-client-preset": "^1.0.5",
     "axios": "^0.17.1",
+    "dropzone": "^5.2.0",
     "extract-files": "^3.0.0",
     "graphql": "^0.11.7",
     "graphql-tag": "^2.6.1",
