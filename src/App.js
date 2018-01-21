@@ -117,6 +117,8 @@ export class App extends Component {
       const { accessToken, username, expiresIn } = getSessionStorage();
       const refreshToken = getRefreshToken();
 
+      this.state.username = username ? username : '';
+
       if(accessToken){
         if(isTokenValid(accessToken, expiresIn) && username){
           this.state.isAuthenticated = true;
@@ -146,11 +148,11 @@ export class App extends Component {
   componentWillMount(){
     const authMiddleware = new ApolloLink((operation, forward) => {
       // add the access_token to the headers
-      
       let csrfToken = `${sessionStorage.getItem('csrfToken')}`;
+
       operation.setContext( context => ({
           headers: {
-            access_token: getToken() || null,
+            authorization: getToken() || null,
             'X-CSRF-Token': csrfToken || null, 
           }
         }));
