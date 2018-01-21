@@ -13,9 +13,7 @@ export default class Thumbnails extends Component {
     uploadSuccess: PropTypes.bool.isRequired
   }
 
-  state = {
-    
-  };
+  state = {};
 
   render() {
 

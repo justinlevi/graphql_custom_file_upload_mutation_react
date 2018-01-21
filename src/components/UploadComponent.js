@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 import axios from 'axios';
 
 // handles browser nuances with drag/drop
@@ -13,22 +14,23 @@ import { withApollo } from 'react-apollo';
 
 import './UploadComponent.css';
 
-const PROJECT_PLACEHOLDER = {
-  username: 'test',
-  pid: 'asfdr1qwerqewvdadsfav231341!!adsfaX' 
-}
-
 const initialState = {
   totalBytes: 0,
+  pid: 0,
   files: [],
   thumbnails: [],
   maxWidth: 400,
   maxHeight: 225,
   uploading: false,
-  uploadPath: PROJECT_PLACEHOLDER.username + '/' + PROJECT_PLACEHOLDER.pid + '/'
+  uploadPath: ''
 };
 
 class UploadComponent extends Component {
+
+  static propTypes = {
+    username: PropTypes.string.isRequired,
+    pid: PropTypes.string.isRequired
+  }
 
   dropzoneRef = undefined;
 
@@ -39,7 +41,14 @@ class UploadComponent extends Component {
   constructor(props){
     super(props);
 
-    this.state = initialState;
+    const uploadPath = props.username + '/' + props.pid + '/';
+    this.state = {
+      ...initialState, 
+      uid: props.uid, 
+      pid: props.pid, 
+      uploadPath: uploadPath
+    };
+
     this.onDrop = this.onDrop.bind(this);
     this.onUploadClick = this.onUploadClick.bind(this); 
     this.handleDelete = this.handleDelete.bind(this); 
@@ -80,11 +89,13 @@ class UploadComponent extends Component {
     }
   }
 
-  createThumbnail = (file) => {
+  createThumbnail = (file, index) => {
     const { maxWidth, maxHeight } = this.state;
     readFile(file, maxWidth, maxHeight, (resizeDataUrl) => {
+      let newThumbnails = this.state.thumbnails;
+      newThumbnails.splice(index, 0, resizeDataUrl);
       this.setState({
-          thumbnails: [...this.state.thumbnails, resizeDataUrl]
+        thumbnails: newThumbnails
       });
     });
   }
@@ -98,6 +109,10 @@ class UploadComponent extends Component {
       files: newFileArray,
       thumbnails: newThumbnailArray
     });
+  }
+
+  handleCancel = (index) => {
+    // TODO
   }
 
   /*
@@ -136,6 +151,29 @@ class UploadComponent extends Component {
     this.setPropOnFile(file, 'uploadInitiated', true);
   }
 
+  syncS3FilesWithDrupalS3fs(files, onSyncComplete = () => {} ){
+
+    const p = this.state.uploadPath;
+    const filesMap = files.map(f => { 
+      return {
+        filename: f.name,
+        filesize: f.size,
+        url: p + f.name
+      }; 
+    });
+
+    this.setState({ synchronizing: true });
+    const variables = {"input": {"files": filesMap}};
+    this.props.client.mutate({ mutation: addS3Files, variables: variables})
+    .then(response => {
+      // send signedUrls to callback
+        console.log('SYNC COMPLETE')
+        onSyncComplete()
+    }).catch((error) => {
+      console.log('error ' + error);
+    });
+  }
+
   /*
   * Event Handling
   * ----------------------
@@ -160,11 +198,15 @@ class UploadComponent extends Component {
       return f.uploadSuccess ? false : true; 
     }).length === 0 ) {
       setTimeout(() => { 
-        this.setState({
-          files: [], 
-          thumbnails: [],
-          uploading: false
-        }); 
+        this.syncS3FilesWithDrupalS3fs(files, 
+          () => {
+            this.setState({
+              files: [], 
+              thumbnails: [],
+              uploading: false
+            }); 
+          }
+        );
       }, 500);   
     }
   }
@@ -176,7 +218,7 @@ class UploadComponent extends Component {
       let file = files[i];
       // Only process image files.
       if (!file.type.match('image.*')) { continue; }
-      this.createThumbnail(file);
+      this.createThumbnail(file, i);
       newFiles.push(file);
     }
     this.setState({files: [...this.state.files, ...newFiles]});
@@ -235,6 +277,12 @@ class UploadComponent extends Component {
 const getSignedUrls = gql `
 query signedUploadURL ($input: SignedUploadInput!) {
   signedUploadURL(input:$input)
+}
+`;
+
+const addS3Files = gql `
+mutation addS3Files($input: S3FilesInput!) {
+  addS3Files(input:$input)
 }
 `;
 
