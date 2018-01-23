@@ -134,6 +134,9 @@ class UploadComponent extends Component {
 
   handleUpload = (signedUrl, file) => {
     const config = {
+      headers: {
+        'Content-Type': file.type
+      },
       onUploadProgress: progressEvent => {
         let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         // update progress on image object
